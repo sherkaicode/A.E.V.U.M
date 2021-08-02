@@ -43,8 +43,10 @@ module.exports = {
             var month = `${today.getMonth()}`;
             var monthstr = mods.getMonthString(today.getMonth());
             var week = today.getDay();
+            
             var tod = today.getDate();
-            var weeknum1 = -1 * ((week - (tod)) % 7);
+            
+            var weeknum1 = -1 * ((week - (tod -1)) % 7);
             const space = 50;
             const WIDTH = 1150;
             const HEIGHT = 1000;
@@ -99,12 +101,13 @@ module.exports = {
             //Put numbers
             var ymul = 0
             var count = 1
+            
             for (c = weeknum1; c < 8; c++) {
                 var bol = true
                 if (count == daysInMonth+1) {
                     break
                 }
-                if (c % 7 == 0) {
+                if (c % 7 == 0&& !(c ==0)) {
                     ymul++;
                     c = 0
                 }

@@ -9,7 +9,8 @@ module.exports = {
         var month = mods.getMonthString(args[0] - 1)
         var day = args[1]
         var cottage = args[2].toLowerCase()
-        console.log(`${month}:${day}:${cottage}`)
+        // console.log(`${month}:${day}:${cottage}`)
+        message.channel.send(`Adding ${month} ${day} to ${cottage} cottage`)
         try {
             if (cottage == 'small') {
                 filePC = 'StarS';
@@ -38,7 +39,7 @@ module.exports = {
                     fs.writeFile(`Database/${filePC}/${month}.json`, json, err => {
                         if (err) throw err;
                     })
-
+                    message.channel.send('Added Successfully')
                 }
             });
         }
