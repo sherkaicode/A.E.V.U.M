@@ -32,7 +32,6 @@ module.exports = {
                     console.log(err);
                 } else {
                     obj = JSON.parse(data); //now it an object
-                    obj.table.pop()
                     for(c = 0; c<obj.table.length;c++) {
                         if(day == obj.table[c]){
                             obj.table.splice(c,1)

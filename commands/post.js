@@ -62,6 +62,19 @@ module.exports = {
                     return;
                 }
                 console.log('Post Id: ' + res.post_id);
+                fs.readFile(`Database/Post/${nam}.json`, 'utf8', async function readFileCallback(err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        obj = JSON.parse(data); //now it an object
+                        obj.table.push(res.post_id)
+                       
+                        var json = JSON.stringify(obj, null, 4);
+                        fs.writeFile(`Database/Post/${nam}.json`, json, err => {
+                            if (err) throw err;
+                        })
+                    }
+                });
                 message.channel.send('Posted Successfully')
             });
         }
