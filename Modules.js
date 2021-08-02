@@ -90,5 +90,28 @@ module.exports = {
     },
     daysInMonth: function (month, year) { // Use 1 for January, 2 for February, etc.
         return new Date(year, month, 0).getDate();
+    },
+    getweekend: function (daysInMonth, weeknum, tod, count = 1) {
+        var dates = [];
+        for (c = weeknum; c < 8; c++) {
+            if (count == daysInMonth + 1) {
+                break
+            }
+            if (count > tod && (c % 7 == 0)) {
+                if (count - 1 > tod) {
+                    dates.push(count - 1)
+                }
+                dates.push(count)
+                c = 0
+            }
+            count++
+        }
+        if (dates.length > 2) {
+            return dates
+        }
+        else {
+            return dates
+        }
+
     }
 }
