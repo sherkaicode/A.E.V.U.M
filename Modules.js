@@ -2,7 +2,7 @@ const Canvas = require('canvas');
 
 module.exports = {
     drawlineV: function (ctx, x, y1, y2) {
-        ctx.fillStyle = "#000000";
+        ctx.strokeStyle = "#24519d";
         ctx.lineWidth = 5;
         ctx.beginPath();
         ctx.moveTo(x, y1);
@@ -10,7 +10,7 @@ module.exports = {
         ctx.stroke();
     },
     drawlineH: function (ctx, y, x1, x2) {
-        ctx.fillStyle = "#000000";
+        ctx.strokeStyle = "#24519d";
         ctx.lineWidth = 5;
         ctx.beginPath();
         ctx.moveTo(x1, y);
