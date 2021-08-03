@@ -1,5 +1,5 @@
 const Canvas = require('canvas');
-
+const fs = require('fs')
 module.exports = {
     drawlineV: function (ctx, x, y1, y2) {
         ctx.strokeStyle = "#24519d";
@@ -91,18 +91,30 @@ module.exports = {
     daysInMonth: function (month, year) { // Use 1 for January, 2 for February, etc.
         return new Date(year, month, 0).getDate();
     },
-    getweekend: function (daysInMonth, weeknum, tod, count = 1) {
+    getweekend: function (daysInMonth, weeknum, tod, count = 1, cottage, monthstr) {
         var dates = [];
+        if (cottage == 'small') {
+            var Star = JSON.parse(fs.readFileSync(`Database/StarS/${monthstr}.json`))
+        }
+        else {
+            var Star = JSON.parse(fs.readFileSync(`Database/StarB/${monthstr}.json`))
+        }
         for (c = weeknum; c < 8; c++) {
+            var test = true
             if (count == daysInMonth + 1) {
                 break
             }
-            if (count > tod && (c % 7 == 0)) {
-                if (count - 1 > tod) {
-                    dates.push(count - 1)
-                }
-                dates.push(count)
+            if (c % 7 == 0&& !(c ==0)) {
                 c = 0
+            }
+            for (g = 0; g < Star.table.length; g++) {
+                if (Star.table[g] == count) {
+                    test = false
+                }
+            }
+            //console.log(`${test} = ${count}`)
+            if ((count >= tod && c%7 == 0 || c%7 == 6 )&& test) {
+                dates.push(count)
             }
             count++
         }

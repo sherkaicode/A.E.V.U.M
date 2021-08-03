@@ -6,25 +6,30 @@ module.exports = {
     name: 'post',
     description: "Pings Latency",
     async execute(client, message, args, Discord) {
+        
+        var nam = args[0];
         var today = new Date();
+        var monthstr = mods.getMonthString(today.getMonth());
+        console.log(monthstr)
         const daysInMonth = mods.daysInMonth(today.getFullYear(), today.getMonth() + 1)
         var week = today.getDay(); 
         var tod = today.getDate();
-        var weeknum1 = -1 * ((week - (tod -1)) % 7);
+        var weeknum1 = Math.abs((week - (tod -1)) % 7);
         var dates;
-        var weekends = mods.getweekend(daysInMonth, weeknum1, tod)
+        var weekends = mods.getweekend(daysInMonth, weeknum1, tod,1 ,nam, monthstr)
+        console.log(weekends)
         if(weekends.length > 2) {
             dates = `${weekends.length}`
         }
         else {
             for(c = 0; c<weekends.length; c++) {
-                dates = dates + `${weekends[c]}`
+                dates = dates + `${weekends[c]},`
             }
         }
         const ACCESS_TOKEN = process.env.FBTOKEN;
         var run = true;
-        var nam = args[0];
-        var captionsmall = `Ka-Bitoon❗️ ${dates} Weekend slot are still available
+        
+        var captionsmall = `Ka-Bitoon❗️ ${dates} Weekends slot are still available
         \n❗️ Book Na ❗️ 
         \n🟡To secure your desired date, be sure to book early and pay at least the minimum downpayment (500 pesos). The first client to pay the downpayment keeps the date. 
         \nSmall Floating Cottage Pics 
@@ -55,28 +60,29 @@ module.exports = {
         }
   
         if (run) {
-            FB.setAccessToken(ACCESS_TOKEN);
-            FB.api('AegisCodez/photos', 'post', { source: fs.createReadStream(`${nam}.png`), caption: captio }, function (res) {
-                if (!res || res.error) {
-                    console.log(!res ? 'error occurred' : res.error);
-                    return;
-                }
-                console.log('Post Id: ' + res.post_id);
-                fs.readFile(`Database/Post/${nam}.json`, 'utf8', async function readFileCallback(err, data) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        obj = JSON.parse(data); //now it an object
-                        obj.table.push(res.post_id)
+            //message.channel.send(captio)
+            // FB.setAccessToken(ACCESS_TOKEN);
+            // FB.api('AegisCodez/photos', 'post', { source: fs.createReadStream(`${nam}.png`), caption: captio }, function (res) {
+            //     if (!res || res.error) {
+            //         console.log(!res ? 'error occurred' : res.error);
+            //         return;
+            //     }
+            //     console.log('Post Id: ' + res.post_id);
+            //     fs.readFile(`Database/Post/${nam}.json`, 'utf8', async function readFileCallback(err, data) {
+            //         if (err) {
+            //             console.log(err);
+            //         } else {
+            //             obj = JSON.parse(data); //now it an object
+            //             obj.table.push(res.post_id)
                        
-                        var json = JSON.stringify(obj, null, 4);
-                        fs.writeFile(`Database/Post/${nam}.json`, json, err => {
-                            if (err) throw err;
-                        })
-                    }
-                });
-                message.channel.send('Posted Successfully')
-            });
+            //             var json = JSON.stringify(obj, null, 4);
+            //             fs.writeFile(`Database/Post/${nam}.json`, json, err => {
+            //                 if (err) throw err;
+            //             })
+            //         }
+            //     });
+            //     message.channel.send('Posted Successfully')
+            // });
         }
 
     }

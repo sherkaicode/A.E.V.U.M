@@ -45,8 +45,9 @@ module.exports = {
             var week = today.getDay();
             
             var tod = today.getDate();
+
             
-            var weeknum1 = -1 * ((week - (tod -1)) % 7);
+            var weeknum1 = Math.abs((week - (tod -1)) % 7);
             const space = 50;
             const WIDTH = 1150;
             const HEIGHT = 1000;
